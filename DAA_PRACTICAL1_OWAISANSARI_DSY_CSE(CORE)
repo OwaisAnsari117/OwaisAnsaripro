@@ -1,5 +1,8 @@
 Code for Task A and Task B:
-#include <stdio.h> #include <stdlib.h> #include <time.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 float generateRandomNumber(float min, float max){ float greator = 0;	int
 flag = 0;	float temp; if (min < 0 || max < 0) { if (min < max) { greator = min;
@@ -87,3 +90,7 @@ printf("Maximum pressure is: %f\nTime Taken to execute is: %f ms\n\n", max, ((do
 
 return 0;
 }
+
+
+
+
