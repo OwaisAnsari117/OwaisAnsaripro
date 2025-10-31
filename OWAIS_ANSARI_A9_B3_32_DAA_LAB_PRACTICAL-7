@@ -1,0 +1,74 @@
+# Hamiltonian Cycle using Backtracking
+
+def is_safe(v, graph, path, pos):
+    # Check if this vertex is adjacent to the previous one
+    if graph[path[pos - 1]][v] == 0:
+        return False
+    # Check if the vertex is already included
+    if v in path:
+        return False
+    return True
+
+
+def hamiltonian_cycle_util(graph, path, pos):
+    n = len(graph)
+
+    # Base case: if all vertices are included
+    if pos == n:
+        # Check if there is an edge from the last to first vertex
+        if graph[path[pos - 1]][path[0]] == 1:
+            return True
+        else:
+            return False
+
+    # Try different vertices as next candidates
+    for v in range(1, n):
+        if is_safe(v, graph, path, pos):
+            path[pos] = v
+            if hamiltonian_cycle_util(graph, path, pos + 1):
+                return True
+            # Backtrack
+            path[pos] = -1
+
+    return False
+
+
+def hamiltonian_cycle(graph):
+    n = len(graph)
+    path = [-1] * n
+    path[0] = 0  # Start from vertex 0 (Area A)
+
+    if not hamiltonian_cycle_util(graph, path, 1):
+        print("No Hamiltonian Cycle exists")
+        return False
+
+    print("Hamiltonian Cycle exists:")
+    for vertex in path:
+        print(chr(ord('A') + vertex), end=" -> ")
+    print(chr(ord('A') + path[0]))
+    return True
+
+
+# Example 1: Graph for Areas A, B, C, D, E
+graph1 = [
+    [0, 1, 1, 0, 1],
+    [1, 0, 1, 1, 0],
+    [1, 1, 0, 1, 0],
+    [0, 1, 1, 0, 1],
+    [1, 0, 0, 1, 0]
+]
+
+# Example 2: Graph for Areas T, M, S, H, C
+graph2 = [
+    [0, 1, 1, 0, 1],
+    [1, 0, 1, 1, 0],
+    [1, 1, 0, 1, 1],
+    [0, 1, 1, 0, 1],
+    [1, 0, 1, 1, 0]
+]
+
+print("Example 1 Output:")
+hamiltonian_cycle(graph1)
+
+print("\nExample 2 Output:")
+hamiltonian_cycle(graph2)
