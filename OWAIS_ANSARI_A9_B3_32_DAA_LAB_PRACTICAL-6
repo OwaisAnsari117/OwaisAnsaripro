@@ -1,0 +1,22 @@
+def obst_min_cost(p, q):
+    n = len(p)
+    e = [[0.0]*(n+1) for _ in range(n+1)]
+    w = [[0.0]*(n+1) for _ in range(n+1)]
+    for i in range(n+1):
+        e[i][i] = q[i]
+        w[i][i] = q[i]
+    for length in range(1, n+1):
+        for i in range(n-length+1):
+            j = i + length
+            w[i][j] = w[i][j-1] + p[j-1] + q[j]
+            e[i][j] = float('inf')
+            for r in range(i+1, j+1):
+                val = e[i][r-1] + e[r][j] + w[i][j]
+                if val < e[i][j]:
+                    e[i][j] = val
+    return e[0][n]
+
+p = [0.1, 0.2, 0.4, 0.3]
+q = [0.05, 0.1, 0.05, 0.05, 0.1]
+print(f"{obst_min_cost(p,q):.4f}")  
+
